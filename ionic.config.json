@@ -1,0 +1,7 @@
+{
+  "name": "frost-mind-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
