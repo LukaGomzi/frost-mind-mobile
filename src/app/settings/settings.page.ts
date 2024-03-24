@@ -13,8 +13,6 @@ export class SettingsPage {
 
   logout() {
     logout();
-    localStorage.removeItem('access_token');
     this.router.navigateByUrl('/login');
   }
-
 }

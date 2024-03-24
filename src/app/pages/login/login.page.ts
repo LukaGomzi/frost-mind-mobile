@@ -19,7 +19,7 @@ export class LoginPage {
     this.http.post<any>('http://localhost:3000/api/v1/auth/login', { username: this.email, password: this.password })
       .subscribe({
         next: (response) => {
-          setLogin(this.email, response.access_token);
+          setLogin(this.email, response.access_token, response.refresh_token);
           this.router.navigateByUrl('/tabs/home');
         },
         error: (error) => {
