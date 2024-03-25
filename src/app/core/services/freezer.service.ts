@@ -19,4 +19,9 @@ export class FreezerService {
   getFreezers(): Observable<Freezer[]> {
     return this.http.get<Freezer[]>(this.baseUrl);
   }
+
+  addFreezer(freezer: { name: string }): Observable<any> {
+    return this.http.post(this.baseUrl, freezer);
+  }
+
 }
