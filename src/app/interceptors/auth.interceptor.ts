@@ -14,8 +14,10 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('Tukajle')
     if (!this.routesToExclude.some(route => request.url.includes(route))) {
       const accessToken = localStorage.getItem('access_token');
+      console.log('Access token', accessToken);
       if (accessToken) {
         request = this.addToken(request, accessToken);
       }
@@ -27,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
           return from(refreshAccessToken()).pipe(
             switchMap(() => {
               const newAccessToken = localStorage.getItem('access_token');
-              return next.handle(this.addToken(request, newAccessToken));
+              return next.handle(this.addToken(request, newAccessToken!));
             }),
             catchError((refreshError) => {
               console.error('Token refresh failed', refreshError);
