@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Add New Freezer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label position="floating">Freezer Name</ion-label>
+      <ion-input [(ngModel)]="name" name="name" type="text" required></ion-input>
+    </ion-item>
+    <ion-button expand="full" type="submit">Add Freezer</ion-button>
+  </form>
+</ion-content>

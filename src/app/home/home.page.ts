@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Freezer, FreezerService } from "../core/services/freezer.service";
 import { Subscription } from "rxjs";
 import { freezers$, updateFreezers } from "../state/freezer.store";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ export class HomePage implements OnInit, OnDestroy {
   freezers: Freezer[] = [];
   private subscription = new Subscription();
 
-  constructor(private freezerService: FreezerService) {}
+  constructor(private freezerService: FreezerService, private router: Router) {}
 
   ngOnInit() {
     this.fetchFreezers();
@@ -26,7 +27,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   addNewFreezer() {
-    console.log('Add new freezer')
+    this.router.navigateByUrl('/add-freezer');
   }
 
   openFreezer(freezer: Freezer) {

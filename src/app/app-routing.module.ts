@@ -19,6 +19,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/registration/registration.module').then(m => m.RegistrationPageModule),
     canActivate: [NoAuthGuard]
   },
+  {
+    path: 'add-freezer',
+    loadChildren: () => import('./pages/add-freezer/add-freezer.module').then( m => m.AddFreezerPageModule)
+  },
 
 ];
 @NgModule({
