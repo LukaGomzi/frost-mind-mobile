@@ -29,4 +29,8 @@ export class FoodTypeService {
   addFoodType(foodType: Omit<FoodType, 'id'>): Observable<FoodType> {
     return this.http.post<FoodType>(this.baseUrl, foodType);
   }
+
+  deleteFoodType(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 }

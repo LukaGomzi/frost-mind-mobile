@@ -38,4 +38,12 @@ export class FoodTypeStore {
       })
     );
   }
+
+  deleteFoodType(id: number) {
+    return this.foodTypeService.deleteFoodType(id).pipe(
+      tap(() => {
+        this.loadFoodTypes();
+      })
+    );
+  }
 }
