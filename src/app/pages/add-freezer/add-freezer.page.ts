@@ -16,7 +16,6 @@ export class AddFreezerPage {
     if (this.name) {
       this.freezerService.addFreezer({ name: this.name }).subscribe({
         next: () => {
-          console.log('Freezer added successfully');
           this.router.navigateByUrl('/tabs/home');
         },
         error: (error) => {
