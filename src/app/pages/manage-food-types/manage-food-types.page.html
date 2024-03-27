@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Manage Food Types</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let foodType of foodTypes$ | async">
+      <ion-label>
+        <h2>{{ foodType.name }}</h2>
+        <p>Expiration: {{ foodType.expirationMonths }} months</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

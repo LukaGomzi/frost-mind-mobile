@@ -8,7 +8,10 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <!-- Add more items here as needed -->
+    <ion-item button routerLink="/manage-food-types">
+      <ion-icon name="fast-food-outline" slot="start"></ion-icon>
+      <ion-label>Manage Food Types</ion-label>
+    </ion-item>
     <ion-item button (click)="logout()">
       <ion-icon name="log-out-outline" slot="start"></ion-icon>
       <ion-label>Logout</ion-label>

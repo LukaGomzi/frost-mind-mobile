@@ -21,7 +21,12 @@ const routes: Routes = [
   },
   {
     path: 'add-freezer',
-    loadChildren: () => import('./pages/add-freezer/add-freezer.module').then( m => m.AddFreezerPageModule)
+    loadChildren: () => import('./pages/add-freezer/add-freezer.module').then( m => m.AddFreezerPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-food-types',
+    loadChildren: () => import('./pages/manage-food-types/manage-food-types.module').then( m => m.ManageFoodTypesPageModule)
   },
 
 ];
