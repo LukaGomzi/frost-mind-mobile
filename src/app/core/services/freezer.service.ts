@@ -24,4 +24,7 @@ export class FreezerService {
     return this.http.post(this.baseUrl, freezer);
   }
 
+  deleteFreezer(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}${id}`);
+  }
 }
