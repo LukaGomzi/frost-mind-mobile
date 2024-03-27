@@ -25,4 +25,8 @@ export class FoodTypeService {
   getFoodTypes(): Observable<FoodType[]> {
     return this.http.get<FoodType[]>(this.baseUrl);
   }
+
+  addFoodType(foodType: Omit<FoodType, 'id'>): Observable<FoodType> {
+    return this.http.post<FoodType>(this.baseUrl, foodType);
+  }
 }

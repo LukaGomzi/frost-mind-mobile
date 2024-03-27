@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FoodTypeStore } from '../../state/food-type.store';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-manage-food-types',
@@ -9,8 +10,11 @@ import { FoodTypeStore } from '../../state/food-type.store';
 export class ManageFoodTypesPage implements OnInit {
   foodTypes$ = this.foodTypeStore.getFoodTypes();
 
-  constructor(private foodTypeStore: FoodTypeStore) {}
+  constructor(private foodTypeStore: FoodTypeStore, private router: Router) {}
 
+  navigateToAddFoodType() {
+    this.router.navigateByUrl('/add-food-type');
+  }
   ngOnInit() {
     this.foodTypeStore.loadFoodTypes();
   }

@@ -1,6 +1,7 @@
 import { createStore, select, withProps } from '@ngneat/elf';
 import { Injectable } from '@angular/core';
-import { FoodTypeService, FoodType } from '../services/food-type.service'; // Adjust the import path as needed
+import { FoodTypeService, FoodType } from '../services/food-type.service';
+import { tap } from "rxjs"; // Adjust the import path as needed
 
 interface FoodTypesState {
   foodTypes: FoodType[];
@@ -28,5 +29,13 @@ export class FoodTypeStore {
         foodTypes,
       }));
     });
+  }
+
+  addFoodType(foodType: Omit<FoodType, 'id'>) {
+    return this.foodTypeService.addFoodType(foodType).pipe(
+      tap(() => {
+        this.loadFoodTypes();
+      })
+    );
   }
 }

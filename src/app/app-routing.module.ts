@@ -28,6 +28,10 @@ const routes: Routes = [
     path: 'manage-food-types',
     loadChildren: () => import('./pages/manage-food-types/manage-food-types.module').then( m => m.ManageFoodTypesPageModule)
   },
+  {
+    path: 'add-food-type',
+    loadChildren: () => import('./pages/add-food-type/add-food-type.module').then( m => m.AddFoodTypePageModule)
+  },
 
 ];
 @NgModule({
