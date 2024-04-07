@@ -21,7 +21,20 @@ const routes: Routes = [
   },
   {
     path: 'add-freezer',
-    loadChildren: () => import('./pages/add-freezer/add-freezer.module').then( m => m.AddFreezerPageModule)
+    loadChildren: () => import('./pages/add-freezer/add-freezer.module').then( m => m.AddFreezerPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-food-types',
+    loadChildren: () => import('./pages/manage-food-types/manage-food-types.module').then( m => m.ManageFoodTypesPageModule)
+  },
+  {
+    path: 'add-food-type',
+    loadChildren: () => import('./pages/add-food-type/add-food-type.module').then( m => m.AddFoodTypePageModule)
+  },
+  {
+    path: 'food-type-details/:id',
+    loadChildren: () => import('./pages/food-type-details/food-type-details.module').then( m => m.FoodTypeDetailsPageModule)
   },
 
 ];

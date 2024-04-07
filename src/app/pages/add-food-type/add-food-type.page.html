@@ -1,0 +1,22 @@
+<!-- add-food-type.page.html -->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Add Food Type</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="submit()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input [(ngModel)]="foodTypeName" name="name" required type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Expiration Months</ion-label>
+        <ion-input [(ngModel)]="expirationMonths" name="expirationMonths" required type="number"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" type="submit">Add</ion-button>
+  </form>
+</ion-content>
