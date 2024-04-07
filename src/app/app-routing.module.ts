@@ -32,6 +32,10 @@ const routes: Routes = [
     path: 'add-food-type',
     loadChildren: () => import('./pages/add-food-type/add-food-type.module').then( m => m.AddFoodTypePageModule)
   },
+  {
+    path: 'food-type-details/:id',
+    loadChildren: () => import('./pages/food-type-details/food-type-details.module').then( m => m.FoodTypeDetailsPageModule)
+  },
 
 ];
 @NgModule({

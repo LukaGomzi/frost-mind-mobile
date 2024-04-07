@@ -1,7 +1,7 @@
 import { createStore, select, withProps } from '@ngneat/elf';
 import { Injectable } from '@angular/core';
 import { FoodTypeService, FoodType } from '../services/food-type.service';
-import { tap } from "rxjs"; // Adjust the import path as needed
+import { filter, map, tap } from "rxjs";
 
 interface FoodTypesState {
   foodTypes: FoodType[];
@@ -36,6 +36,20 @@ export class FoodTypeStore {
       tap(() => {
         this.loadFoodTypes();
       })
+    );
+  }
+
+  updateFoodType(id: number, foodType: FoodType) {
+    return this.foodTypeService.updateFoodType(id, foodType).pipe(
+      tap(() => {
+        this.loadFoodTypes();
+      })
+    );
+  }
+
+  getFoodTypeById(id: number) {
+    return this.getFoodTypes().pipe(
+      map(foodTypes => foodTypes.find(ft => ft.id === id))
     );
   }
 

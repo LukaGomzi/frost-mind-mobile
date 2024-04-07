@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Edit Food Type</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form *ngIf="foodType" (ngSubmit)="save()">
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input [(ngModel)]="foodType.name" name="name" type="text" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Expiration Months</ion-label>
+      <ion-input [(ngModel)]="foodType.expirationMonths" name="expirationMonths" type="number" required></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit">Save</ion-button>
+  </form>
+</ion-content>

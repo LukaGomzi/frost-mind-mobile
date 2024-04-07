@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface FoodType {
-  id: number;
+  id?: number;
   name: string;
   expirationMonths: number;
   createdBy?: {
@@ -26,11 +26,20 @@ export class FoodTypeService {
     return this.http.get<FoodType[]>(this.baseUrl);
   }
 
-  addFoodType(foodType: Omit<FoodType, 'id'>): Observable<FoodType> {
-    return this.http.post<FoodType>(this.baseUrl, foodType);
+  addFoodType(foodType: FoodType): Observable<FoodType> {
+    const payload = { ...foodType };
+    delete payload.id;
+    delete payload.createdBy;
+    console.log('add fod type', payload);
+
+    return this.http.post<FoodType>(this.baseUrl, payload);
   }
 
   deleteFoodType(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+  updateFoodType(id: number, foodType: Omit<FoodType, 'id'>): Observable<FoodType> {
+    return this.http.put<FoodType>(`${this.baseUrl}/${id}`, foodType);
   }
 }
