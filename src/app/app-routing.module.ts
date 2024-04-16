@@ -26,17 +26,24 @@ const routes: Routes = [
   },
   {
     path: 'manage-food-types',
-    loadChildren: () => import('./pages/manage-food-types/manage-food-types.module').then( m => m.ManageFoodTypesPageModule)
+    loadChildren: () => import('./pages/manage-food-types/manage-food-types.module').then( m => m.ManageFoodTypesPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'add-food-type',
-    loadChildren: () => import('./pages/add-food-type/add-food-type.module').then( m => m.AddFoodTypePageModule)
+    loadChildren: () => import('./pages/add-food-type/add-food-type.module').then( m => m.AddFoodTypePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'food-type-details/:id',
-    loadChildren: () => import('./pages/food-type-details/food-type-details.module').then( m => m.FoodTypeDetailsPageModule)
+    loadChildren: () => import('./pages/food-type-details/food-type-details.module').then( m => m.FoodTypeDetailsPageModule),
+    canActivate: [AuthGuard]
   },
-
+  {
+    path: 'freezer-details/:id',
+    loadChildren: () => import('./pages/freezer-details/freezer-details.module').then( m => m.FreezerDetailsPageModule),
+    canActivate: [AuthGuard]
+  }
 ];
 @NgModule({
   imports: [

@@ -2,10 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface FoodItem {
+  id: number;
+  name: string;
+  description?: string;
+  weight?: number;
+  quantity?: number;
+  expirationDate: string;
+  foodTypeId: number;
+}
+
 export interface Freezer {
   id: number;
   name: string;
   created_at: string;
+  foodItems: FoodItem[];
 }
 
 @Injectable({
@@ -18,6 +29,10 @@ export class FreezerService {
 
   getFreezers(): Observable<Freezer[]> {
     return this.http.get<Freezer[]>(this.baseUrl);
+  }
+
+  getFreezerById(id: number): Observable<Freezer> {
+    return this.http.get<Freezer>(this.baseUrl + id)
   }
 
   addFreezer(freezer: { name: string }): Observable<any> {
