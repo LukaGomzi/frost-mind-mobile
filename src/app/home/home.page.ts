@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Freezer, FreezerService } from "../core/services/freezer.service";
 import { Subscription } from "rxjs";
-import { freezers$, updateFreezers } from "../state/freezer.store";
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
+import { FreezersStore } from "../state/freezer.store";
 
 @Component({
   selector: 'app-home',
@@ -16,19 +16,20 @@ export class HomePage implements OnInit, OnDestroy {
 
   constructor(
     private freezerService: FreezerService,
+    private freezersStore: FreezersStore,
     private router: Router,
     private alertController: AlertController
   ) {}
 
   ngOnInit() {
-    this.fetchFreezers();
-    this.subscription.add(freezers$.subscribe(data => this.freezers = data));
+    this.loadFreezers();
+    this.subscription.add(this.freezersStore.getFreezers().subscribe(data => {
+      this.freezers = data;
+    }));
   }
 
-  fetchFreezers() {
-    this.freezerService.getFreezers().subscribe(freezers => {
-      updateFreezers(freezers);
-    });
+  loadFreezers() {
+    this.freezersStore.loadFreezers(); // No need to subscribe here; let the store manage the state
   }
 
   addNewFreezer() {
@@ -60,17 +61,13 @@ export class HomePage implements OnInit, OnDestroy {
     this.subscription.add(
       this.freezerService.deleteFreezer(freezerId).subscribe({
         next: () => {
-          this.fetchFreezers();
+          this.loadFreezers();
         },
         error: (error) => {
           console.error('Error deleting freezer:', error);
         },
       })
     );
-  }
-
-  openFreezer(freezer: Freezer) {
-    console.log('Open freezer', freezer);
   }
 
   ngOnDestroy() {

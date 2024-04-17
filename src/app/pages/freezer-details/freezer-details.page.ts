@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Freezer, FreezerService } from "../../core/services/freezer.service";
 import { Subscription } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
-import { getFreezerByFreezerId } from "../../state/freezer.store";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FreezersStore } from "../../state/freezer.store";
 
 @Component({
   selector: 'app-freezer-details',
@@ -13,23 +13,32 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
   freezer?: Freezer;
   private subscription: Subscription = new Subscription();
 
-  constructor(private route: ActivatedRoute, private freezerService: FreezerService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private freezerService: FreezerService,
+    private freezersStore: FreezersStore
+  ) {}
 
   ngOnInit(): void {
     this.subscription.add(
       this.route.params.subscribe(params => {
         const freezerId = params['id'];
         if (freezerId) {
-          this.loadFoodItems(freezerId);
+          this.loadFreezer(freezerId);
         }
       })
     );
   }
 
-  private loadFoodItems(freezerId: number): void {
+  addNewItemToFreezer(freezerId: number): void {
+    this.router.navigateByUrl('/freezer-details/' + freezerId + '/new-item');
+  }
+
+  private loadFreezer(freezerId: number): void {
     this.subscription.add(
-      getFreezerByFreezerId(freezerId, this.freezerService).subscribe(foodItems => {
-        this.freezer = foodItems;
+      this.freezersStore.getFreezerById(freezerId).subscribe(freezer => {
+        this.freezer = freezer;
       })
     );
   }

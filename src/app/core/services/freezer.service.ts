@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { FreezerItem, FreezerItemRequest } from "../models/freezer-item.model";
 
 export interface FoodItem {
   id: number;
@@ -41,5 +42,9 @@ export class FreezerService {
 
   deleteFreezer(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}${id}`);
+  }
+
+  addItemToFreezer(freezerId: number, item: FreezerItemRequest): Observable<FreezerItem> {
+    return this.http.post<FreezerItem>(`${this.baseUrl}${freezerId}/item`, item);
   }
 }
