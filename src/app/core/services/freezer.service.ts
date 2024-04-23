@@ -47,4 +47,12 @@ export class FreezerService {
   addItemToFreezer(freezerId: number, item: FreezerItemRequest): Observable<FreezerItem> {
     return this.http.post<FreezerItem>(`${this.baseUrl}${freezerId}/item`, item);
   }
+
+  takeItemOutOfFreezer(freezerId: number, itemId: number, quantity?: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}${freezerId}/item/take-out`, { itemId, quantity });
+  }
+
+  disposeItemInFreezer(freezerId: number, itemId: number, quantity?: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}${freezerId}/item/dispose-item`, { itemId, quantity });
+  }
 }

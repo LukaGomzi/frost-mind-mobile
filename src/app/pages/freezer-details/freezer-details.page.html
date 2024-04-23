@@ -18,6 +18,13 @@
       <ion-label>
         {{ item.name }} - Quantity: {{ item.quantity }}
       </ion-label>
+      <ion-button slot="end" color="primary" (click)="takeItemOut(item.id, freezer?.id!)">
+        Take Out
+      </ion-button>
+      <ion-button slot="end" color="danger" (click)="disposeItem(item.id, freezer?.id!)">
+        Throw Away
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
+

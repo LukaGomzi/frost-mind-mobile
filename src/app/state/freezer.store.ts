@@ -74,4 +74,16 @@ export class FreezersStore {
       })
     );
   }
+
+  takeItemOut(freezerId: number, itemId: number, quantity?: number): Observable<void> {
+    return this.freezerService.takeItemOutOfFreezer(freezerId, itemId, quantity).pipe(
+      tap(() => this.loadFreezers())
+    );
+  }
+
+  disposeItem(freezerId: number, itemId: number, quantity?: number): Observable<void> {
+    return this.freezerService.disposeItemInFreezer(freezerId, itemId, quantity).pipe(
+      tap(() => this.loadFreezers())
+    );
+  }
 }

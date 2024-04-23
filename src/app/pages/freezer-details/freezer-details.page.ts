@@ -35,6 +35,18 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
     this.router.navigateByUrl('/freezer-details/' + freezerId + '/new-item');
   }
 
+  takeItemOut(itemId: number, freezerId: number) {
+    this.freezersStore.takeItemOut(freezerId, itemId, 1).subscribe({
+      error: (err) => console.error('Failed to take item out', err)
+    });
+  }
+
+  disposeItem(itemId: number, freezerId: number) {
+    this.freezersStore.disposeItem(freezerId, itemId, 1).subscribe({
+      error: (err) => console.error('Failed to dispose item', err)
+    });
+  }
+
   private loadFreezer(freezerId: number): void {
     this.subscription.add(
       this.freezersStore.getFreezerById(freezerId).subscribe(freezer => {
