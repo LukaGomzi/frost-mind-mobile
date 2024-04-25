@@ -13,9 +13,17 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { FoodTypeStore } from "./state/food-type.store";
 
 export function initializeFoodTypeData(foodTypeStore: FoodTypeStore) {
+  const accessToken = localStorage.getItem('access_token');
+  if (accessToken) {
+    return (): Promise<void> => {
+      return new Promise((resolve, reject) => {
+        foodTypeStore.loadFoodTypes();
+        resolve();
+      });
+    }
+  }
   return (): Promise<void> => {
     return new Promise((resolve, reject) => {
-      foodTypeStore.loadFoodTypes();
       resolve();
     });
   }

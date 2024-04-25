@@ -28,12 +28,18 @@ export const refreshAccessToken = async () => {
   if (!refreshToken) {
     throw new Error('No refresh token available');
   }
-  const response = await fetch('http://localhost:3000/auth/refresh', {
+
+  const username = localStorage.getItem('user_email');
+  if (!username) {
+    throw new Error('No username available');
+  }
+
+  const response = await fetch('http://localhost:3000/api/v1/auth/refresh', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ refreshToken }),
+    body: JSON.stringify({ refreshToken, username }),
   });
 
   if (!response.ok) {
@@ -41,7 +47,7 @@ export const refreshAccessToken = async () => {
   }
 
   const data = await response.json();
-  setLogin(data.userEmail, data.access_token, data.refresh_token);
+  setLogin(username, data.access_token, refreshToken);
 };
 
 export const checkLoginStatus = () => {
