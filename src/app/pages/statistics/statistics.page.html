@@ -1,0 +1,96 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Statistics</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Date range picker -->
+  <ion-row>
+    <ion-col class="date-picker">
+      <p class="date-picker-label">From:</p>
+      <ion-datetime-button datetime="startdate" ></ion-datetime-button>
+    </ion-col>
+    <ion-col class="date-picker">
+      <p class="date-picker-label">To:</p>
+      <ion-datetime-button datetime="enddate"></ion-datetime-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime id="startdate" presentation="date"></ion-datetime>
+    </ng-template>
+  </ion-modal>
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime id="enddate" presentation="date"></ion-datetime>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Segment control -->
+  <ion-segment value="used">
+    <ion-segment-button value="used">
+      <ion-label>Used</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="disposed">
+      <ion-label>Disposed</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Used items -->
+  <div class="used-items">
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Chicken</ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label>Legs:</ion-label>
+        <ion-label slot="end">4.52 kg</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Wings</ion-label>
+        <ion-label slot="end">2.1 kg</ion-label>
+      </ion-item>
+      <ion-item class="total" lines="none">
+        <ion-label>Total:</ion-label>
+        <ion-label slot="end">6.62 kg</ion-label>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Cow:</ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label>Steak:</ion-label>
+        <ion-label slot="end">1.25 kg</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Bones for soup:</ion-label>
+        <ion-label slot="end">4.5 kg</ion-label>
+      </ion-item>
+      <ion-item class="total" lines="none">
+        <ion-label>Total:</ion-label>
+        <ion-label slot="end">5.75 kg</ion-label>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Summary:</ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label>Total in weight:</ion-label>
+        <ion-label style="font-weight: 600" slot="end">12.37 kg</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Total packages:</ion-label>
+        <ion-label style="font-weight: 600" slot="end">49</ion-label>
+      </ion-item>
+    </ion-item-group>
+  </div>
+</ion-content>

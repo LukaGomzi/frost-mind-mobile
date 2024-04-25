@@ -46,8 +46,9 @@ const routes: Routes = [
   },
   {
     path: 'freezer-details/:id/new-item',
-    loadChildren: () => import('./pages/freezer-new-item/freezer-new-item.module').then( m => m.FreezerNewItemPageModule)
-  }
+    loadChildren: () => import('./pages/freezer-new-item/freezer-new-item.module').then( m => m.FreezerNewItemPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 @NgModule({
   imports: [
