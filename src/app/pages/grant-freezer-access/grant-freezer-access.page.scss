@@ -1,0 +1,27 @@
+.grant-access-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+ion-item {
+  --background: transparent;
+  margin-bottom: 1rem;
+}
+
+ion-button.submit-button {
+  margin-top: 1.5rem;
+  --background: #3880ff;
+  --border-radius: 20px;
+  --color: white;
+}
