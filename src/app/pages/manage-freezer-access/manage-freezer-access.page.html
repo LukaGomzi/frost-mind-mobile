@@ -4,6 +4,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/home"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="navigateToGrantAccess()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -22,7 +27,4 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-  <ion-button expand="full" (click)="navigateToGrantAccess()">
-    Grant Access
-  </ion-button>
 </ion-content>

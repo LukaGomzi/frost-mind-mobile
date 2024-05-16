@@ -7,37 +7,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form [formGroup]="newItemForm" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-label position="floating">Name</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
-    </ion-item>
+<ion-content class="add-item-content">
+  <div class="form-container">
+    <form [formGroup]="newItemForm" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Description</ion-label>
-      <ion-textarea formControlName="description"></ion-textarea>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-textarea formControlName="description"></ion-textarea>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Quantity</ion-label>
-      <ion-input type="number" formControlName="quantity"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Quantity</ion-label>
+        <ion-input type="number" formControlName="quantity"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Weight (optional)</ion-label>
-      <ion-input type="number" formControlName="weight"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Weight (optional)</ion-label>
+        <ion-input type="number" formControlName="weight"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Food Type</ion-label>
-      <ion-select formControlName="foodTypeId">
-        <ion-select-option *ngFor="let foodType of foodTypes$ | async" [value]="foodType.id">
-          {{ foodType.name }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label>Food Type</ion-label>
+        <ion-select formControlName="foodTypeId">
+          <ion-select-option *ngFor="let foodType of foodTypes$ | async" [value]="foodType.id">
+            {{ foodType.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
 
-    <ion-button expand="block" type="submit" [disabled]="!newItemForm.valid">Add Item</ion-button>
-  </form>
+      <ion-button expand="block" type="submit" [disabled]="!newItemForm.valid" class="submit-button">Add Item</ion-button>
+    </form>
+  </div>
 </ion-content>
