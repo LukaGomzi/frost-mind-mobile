@@ -26,5 +26,11 @@
       </ion-button>
     </ion-item>
   </ion-list>
-</ion-content>
 
+  <!-- Floating Action Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="navigateToManageFreezerAccess(freezer?.id!)">
+      <ion-icon name="person-add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

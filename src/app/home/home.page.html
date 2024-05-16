@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let freezer of freezers">
+    <ion-item-sliding *ngFor="let freezer of freezers$ | async">
       <ion-item [routerLink]="['/freezer-details', freezer.id]">
         <ion-label>
           <h2>{{ freezer.name }}</h2>

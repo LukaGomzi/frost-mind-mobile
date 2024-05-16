@@ -86,4 +86,12 @@ export class FreezersStore {
       tap(() => this.loadFreezers())
     );
   }
+
+  assignFreezerToUser(freezerId: number, username: string): Observable<void> {
+    return this.freezerService.assignFreezerToUser(freezerId, username);
+  }
+
+  reset(): void {
+    this.freezersStore.reset();
+  }
 }

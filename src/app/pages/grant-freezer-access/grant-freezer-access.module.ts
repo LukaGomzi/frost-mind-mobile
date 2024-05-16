@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FreezerDetailsPageRoutingModule } from './freezer-details-routing.module';
+import { GrantFreezerAccessPageRoutingModule } from './grant-freezer-access-routing.module';
 
-import { FreezerDetailsPage } from './freezer-details.page';
+import { GrantFreezerAccessPage } from './grant-freezer-access.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FreezerDetailsPageRoutingModule,
+    GrantFreezerAccessPageRoutingModule,
     ReactiveFormsModule,
   ],
-  declarations: [FreezerDetailsPage]
+  declarations: [GrantFreezerAccessPage]
 })
-export class FreezerDetailsPageModule {}
+export class GrantFreezerAccessPageModule {}

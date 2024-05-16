@@ -49,6 +49,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/freezer-new-item/freezer-new-item.module').then( m => m.FreezerNewItemPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'freezer-details/:id/manage-freezer-access',
+    loadChildren: () => import('./pages/manage-freezer-access/manage-freezer-access.module').then( m => m.ManageFreezerAccessPageModule)
+  },
+  {
+    path: 'freezer-details/:id/grant-freezer-access',
+    loadChildren: () => import('./pages/grant-freezer-access/grant-freezer-access.module').then( m => m.GrantFreezerAccessPageModule)
+  },
 ];
 @NgModule({
   imports: [

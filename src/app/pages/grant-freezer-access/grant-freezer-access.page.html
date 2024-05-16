@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Grant Access</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="getBackButtonURL()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="grantAccessForm" (ngSubmit)="grantAccess()">
+    <ion-item>
+      <ion-label position="floating">Username</ion-label>
+      <ion-input formControlName="username"></ion-input>
+    </ion-item>
+    <ion-button expand="full" type="submit" [disabled]="grantAccessForm.invalid">
+      Submit
+    </ion-button>
+  </form>
+</ion-content>

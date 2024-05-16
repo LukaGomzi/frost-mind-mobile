@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Freezer, FreezerService } from "../core/services/freezer.service";
-import { Subscription } from "rxjs";
+import { first, Observable, Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
 import { FreezersStore } from "../state/freezer.store";
@@ -8,28 +8,28 @@ import { FreezersStore } from "../state/freezer.store";
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  styleUrls: ['home.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage implements OnInit, OnDestroy {
-  freezers: Freezer[] = [];
-  private subscription = new Subscription();
+  freezers$: Observable<Freezer[]> = this.freezersStore.getFreezers();
+  private onDestroy$ = new Subject();
 
   constructor(
     private freezerService: FreezerService,
     private freezersStore: FreezersStore,
     private router: Router,
     private alertController: AlertController
-  ) {}
+  ) {
+    this.loadFreezers();
+  }
 
   ngOnInit() {
     this.loadFreezers();
-    this.subscription.add(this.freezersStore.getFreezers().subscribe(data => {
-      this.freezers = data;
-    }));
   }
 
   loadFreezers() {
-    this.freezersStore.loadFreezers(); // No need to subscribe here; let the store manage the state
+    this.freezersStore.loadFreezers();
   }
 
   addNewFreezer() {
@@ -58,19 +58,23 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   deleteFreezer(freezerId: number) {
-    this.subscription.add(
-      this.freezerService.deleteFreezer(freezerId).subscribe({
-        next: () => {
-          this.loadFreezers();
-        },
-        error: (error) => {
-          console.error('Error deleting freezer:', error);
-        },
-      })
-    );
+    this.freezerService.deleteFreezer(freezerId)
+      .pipe(
+        first(),
+        takeUntil(this.onDestroy$),
+      )
+      .subscribe({
+      next: () => {
+        this.loadFreezers();
+      },
+      error: (error) => {
+        console.error('Error deleting freezer:', error);
+      },
+    })
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.onDestroy$.next(undefined);
+    this.onDestroy$.complete();
   }
 }

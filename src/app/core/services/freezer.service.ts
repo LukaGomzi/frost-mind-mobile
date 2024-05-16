@@ -55,4 +55,8 @@ export class FreezerService {
   disposeItemInFreezer(freezerId: number, itemId: number, quantity?: number): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}${freezerId}/item/dispose-item`, { itemId, quantity });
   }
+
+  assignFreezerToUser(freezerId: number, username: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}${freezerId}/users/${username}`, undefined);
+  }
 }

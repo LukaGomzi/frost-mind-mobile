@@ -17,7 +17,7 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private freezerService: FreezerService,
-    private freezersStore: FreezersStore
+    private freezersStore: FreezersStore,
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +47,10 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
     });
   }
 
+  navigateToManageFreezerAccess(freezerId: number): void {
+    this.router.navigateByUrl(`/freezer-details/${freezerId}/manage-freezer-access`);
+  }
+
   private loadFreezer(freezerId: number): void {
     this.subscription.add(
       this.freezersStore.getFreezerById(freezerId).subscribe(freezer => {
@@ -58,5 +62,4 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }
