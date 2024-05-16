@@ -91,6 +91,10 @@ export class FreezersStore {
     return this.freezerService.assignFreezerToUser(freezerId, username);
   }
 
+  removeUserFromFreezer(freezerId: number, username: string): Observable<void> {
+    return this.freezerService.removeUserFromFreezer(freezerId, username);
+  }
+
   getFreezerUsers(freezerId: number): Observable<FreezerUser[]> {
     return this.freezerService.loadFreezerUsers(freezerId);
   }

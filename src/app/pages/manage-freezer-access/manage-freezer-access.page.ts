@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, of, Subscription } from "rxjs";
 import { FreezersStore } from "../../state/freezer.store";
 import { FreezerUser } from "../../core/services/freezer.service";
+import { AlertController } from "@ionic/angular";
 
 @Component({
   selector: 'app-manage-freezer-access',
@@ -14,7 +15,12 @@ export class ManageFreezerAccessPage implements OnInit, OnDestroy {
   freezerId?: number;
   private subscription?: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private freezerStore: FreezersStore) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private freezerStore: FreezersStore,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {
@@ -31,6 +37,38 @@ export class ManageFreezerAccessPage implements OnInit, OnDestroy {
 
   isCurrentUser(username: string): boolean {
     return localStorage.getItem('user_email') == username;
+  }
+
+  async confirmRemoveAccess(username: string) {
+    const alert = await this.alertController.create({
+      header: 'Confirm Remove Access',
+      message: `Are you sure you want to remove access for ${username}?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+        }, {
+          text: 'Yes, Remove',
+          handler: () => {
+            this.removeAccess(username);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  removeAccess(username: string) {
+    if (this.freezerId) {
+      this.freezerStore.removeUserFromFreezer(this.freezerId, username).subscribe({
+        next: () => {
+          this.usersWithAccess$ = this.freezerStore.getFreezerUsers(this.freezerId!);
+        },
+        error: (err) => console.error('Failed to remove access', err)
+      });
+    }
   }
 
   ngOnDestroy() {

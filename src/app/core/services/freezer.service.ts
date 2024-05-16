@@ -66,6 +66,10 @@ export class FreezerService {
     return this.http.post<void>(`${this.baseUrl}${freezerId}/users/${username}`, undefined);
   }
 
+  removeUserFromFreezer(freezerId: number, username: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}${freezerId}/users/${username}`);
+  }
+
   loadFreezerUsers(freezerId: number): Observable<FreezerUser[]> {
     return this.http.get<FreezerUser[]>(`${this.baseUrl}${freezerId}/users`);
   }
