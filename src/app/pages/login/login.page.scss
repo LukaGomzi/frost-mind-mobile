@@ -1,0 +1,38 @@
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  margin-top: 5rem;
+  border-radius: 10px;
+  background-color: white;
+  text-align: center;
+}
+
+.login-container h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #000;
+}
+
+ion-item {
+  --background: transparent;
+  margin-bottom: 1rem;
+}
+
+ion-button {
+  margin-top: 1.5rem;
+}
+
+ion-button[fill="clear"] {
+  --color: #3880ff;
+  text-transform: none;
+}

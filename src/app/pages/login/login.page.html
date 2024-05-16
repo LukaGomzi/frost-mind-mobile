@@ -1,20 +1,17 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-label position="floating">Gmail</ion-label>
-      <ion-input type="email" [(ngModel)]="email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" [(ngModel)]="password"></ion-input>
-    </ion-item>
-  </ion-list>
-  <ion-button expand="block" (click)="login()">Login</ion-button>
-  <ion-button expand="block" fill="clear" routerLink="/registration">Sign Up</ion-button>
+<ion-content class="login-content">
+  <div class="login-container">
+    <h1>Frost Mind</h1>
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" [(ngModel)]="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" [(ngModel)]="password"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" (click)="login()">Login</ion-button>
+    <ion-button expand="block" fill="clear" routerLink="/registration">Sign Up</ion-button>
+  </div>
 </ion-content>

@@ -1,30 +1,27 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Register</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <form (ngSubmit)="register()">
-    <ion-list>
-      <ion-item>
-        <ion-label position="floating">Username</ion-label>
-        <ion-input [(ngModel)]="username" name="username" type="text" required></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Confirm Password</ion-label>
-        <ion-input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" required></ion-input>
-      </ion-item>
-    </ion-list>
-    <ion-button expand="block" type="submit">Register</ion-button>
-    <ion-button expand="block" fill="clear" routerLink="/login">Sign In</ion-button>
-  </form>
+<ion-content class="register-content">
+  <div class="register-container">
+    <h1>Frost Mind</h1>
+    <form (ngSubmit)="register()">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Username</ion-label>
+          <ion-input [(ngModel)]="username" name="username" type="text" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Confirm Password</ion-label>
+          <ion-input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" required></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="block" type="submit">Register</ion-button>
+      <ion-button expand="block" fill="clear" routerLink="/login">Sign In</ion-button>
+    </form>
+  </div>
 </ion-content>
