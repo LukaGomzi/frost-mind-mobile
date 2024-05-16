@@ -4,33 +4,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <!-- Date range picker -->
-<!-- TODO: Implement the time filter at some other time -->
-<!--  <ion-row>-->
-<!--    <ion-col class="date-picker">-->
-<!--      <p class="date-picker-label">From:</p>-->
-<!--      <ion-datetime-button datetime="startdate" ></ion-datetime-button>-->
-<!--    </ion-col>-->
-<!--    <ion-col class="date-picker">-->
-<!--      <p class="date-picker-label">To:</p>-->
-<!--      <ion-datetime-button datetime="enddate"></ion-datetime-button>-->
-<!--    </ion-col>-->
-<!--  </ion-row>-->
-
-  <ion-modal [keepContentsMounted]="true">
-    <ng-template>
-      <ion-datetime id="startdate" presentation="date"></ion-datetime>
-    </ng-template>
-  </ion-modal>
-  <ion-modal [keepContentsMounted]="true">
-    <ng-template>
-      <ion-datetime id="enddate" presentation="date"></ion-datetime>
-    </ng-template>
-  </ion-modal>
-
+<ion-content [fullscreen]="true" class="statistics-content">
   <!-- Segment control -->
-  <ion-segment [(ngModel)]="viewType">
+  <ion-segment [(ngModel)]="viewType" class="segment-control">
     <ion-segment-button [value]="EnumViewType.Used">
       <ion-label>Used</ion-label>
     </ion-segment-button>
@@ -41,70 +17,75 @@
   <ng-container *ngIf="statistics$ | async as stats">
     <div class="used-items" *ngIf="viewType === EnumViewType.Used">
       <ng-container *ngFor="let group of stats.used">
-        <ion-item-group>
-          <ion-item-divider>
-            <ion-label>{{ group.foodType }}</ion-label>
-          </ion-item-divider>
-
-          <ng-container *ngFor="let item of group.items">
-            <ion-item>
-              <ion-label>{{ item.name }}:</ion-label>
-              <ion-label slot="end">{{ item.weight }}g</ion-label>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ group.foodType }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ng-container *ngFor="let item of group.items">
+              <ion-item>
+                <ion-label>{{ item.name }}</ion-label>
+                <ion-label slot="end">{{ item.weight }}g</ion-label>
+              </ion-item>
+            </ng-container>
+            <ion-item lines="none" class="total">
+              <ion-label>Total</ion-label>
+              <ion-label slot="end">{{ group.totalWeight }}g</ion-label>
             </ion-item>
-          </ng-container>
-          <ion-item class="total" lines="none">
-            <ion-label>Total:</ion-label>
-            <ion-label slot="end">{{ group.totalWeight }}g</ion-label>
-          </ion-item>
-        </ion-item-group>
+          </ion-card-content>
+        </ion-card>
       </ng-container>
-      <ion-item-group>
-        <ion-item-divider>
-          <ion-label>Summary:</ion-label>
-        </ion-item-divider>
-
-        <ion-item>
-          <ion-label>Total in weight:</ion-label>
-          <ion-label style="font-weight: 600" slot="end">{{ calculateTotalWeightForCategories(stats.used) }}g</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Total packages:</ion-label>
-          <ion-label style="font-weight: 600" slot="end">{{ calculateTotalPackagesForCategories(stats.used) }}</ion-label>
-        </ion-item>
-      </ion-item-group>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Summary</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <ion-label>Total in weight</ion-label>
+            <ion-label slot="end">{{ calculateTotalWeightForCategories(stats.used) }}g</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Total packages</ion-label>
+            <ion-label slot="end">{{ calculateTotalPackagesForCategories(stats.used) }}</ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
     </div>
     <div class="disposed-items" *ngIf="viewType === EnumViewType.Disposed">
       <ng-container *ngFor="let group of stats.disposed">
-        <ion-item-group>
-          <ion-item-divider>
-            <ion-label>{{ group.foodType }}</ion-label>
-          </ion-item-divider>
-
-          <ng-container *ngFor="let item of group.items">
-            <ion-item>
-              <ion-label>{{ item.name }}:</ion-label>
-              <ion-label slot="end">{{ item.weight }} g</ion-label>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ group.foodType }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ng-container *ngFor="let item of group.items">
+              <ion-item>
+                <ion-label>{{ item.name }}</ion-label>
+                <ion-label slot="end">{{ item.weight }}g</ion-label>
+              </ion-item>
+            </ng-container>
+            <ion-item lines="none" class="total">
+              <ion-label>Total</ion-label>
+              <ion-label slot="end">{{ group.totalWeight }}g</ion-label>
             </ion-item>
-          </ng-container>
-          <ion-item class="total" lines="none">
-            <ion-label>Total:</ion-label>
-            <ion-label slot="end">{{ group.totalWeight }}g</ion-label>
-          </ion-item>
-        </ion-item-group>
+          </ion-card-content>
+        </ion-card>
       </ng-container>
-      <ion-item-group>
-        <ion-item-divider>
-          <ion-label>Summary:</ion-label>
-        </ion-item-divider>
-        <ion-item>
-          <ion-label>Total in weight:</ion-label>
-          <ion-label style="font-weight: 600" slot="end">{{ calculateTotalWeightForCategories(stats.disposed) }}g</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Total packages:</ion-label>
-          <ion-label style="font-weight: 600" slot="end">{{ calculateTotalPackagesForCategories(stats.disposed) }}</ion-label>
-        </ion-item>
-      </ion-item-group>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Summary</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <ion-label>Total in weight</ion-label>
+            <ion-label slot="end">{{ calculateTotalWeightForCategories(stats.disposed) }}g</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Total packages</ion-label>
+            <ion-label slot="end">{{ calculateTotalPackagesForCategories(stats.disposed) }}</ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
     </div>
   </ng-container>
   <ng-container *ngIf="isLoading$ | async as loading">
