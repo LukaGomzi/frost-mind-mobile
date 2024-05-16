@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="home-content">
   <ion-list>
     <ion-item-sliding *ngFor="let freezer of freezers$ | async">
       <ion-item [routerLink]="['/freezer-details', freezer.id]">
