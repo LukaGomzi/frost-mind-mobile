@@ -20,6 +20,12 @@ export interface Freezer {
   foodItems: FoodItem[];
 }
 
+export interface FreezerUser {
+  id: number;
+  username: string;
+  email: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -58,5 +64,9 @@ export class FreezerService {
 
   assignFreezerToUser(freezerId: number, username: string): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}${freezerId}/users/${username}`, undefined);
+  }
+
+  loadFreezerUsers(freezerId: number): Observable<FreezerUser[]> {
+    return this.http.get<FreezerUser[]>(`${this.baseUrl}${freezerId}/users`);
   }
 }

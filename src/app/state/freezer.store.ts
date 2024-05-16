@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createStore, withProps, select } from '@ngneat/elf';
-import { Freezer, FreezerService } from "../core/services/freezer.service"; // Update path if necessary
+import { Freezer, FreezerService, FreezerUser } from "../core/services/freezer.service"; // Update path if necessary
 import { map, Observable, of, tap } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
 import { FreezerItem, FreezerItemRequest } from "../core/models/freezer-item.model";
@@ -89,6 +89,10 @@ export class FreezersStore {
 
   assignFreezerToUser(freezerId: number, username: string): Observable<void> {
     return this.freezerService.assignFreezerToUser(freezerId, username);
+  }
+
+  getFreezerUsers(freezerId: number): Observable<FreezerUser[]> {
+    return this.freezerService.loadFreezerUsers(freezerId);
   }
 
   reset(): void {
