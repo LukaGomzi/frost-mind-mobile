@@ -1,0 +1,44 @@
+.freezer-content {
+  padding: 16px;
+}
+
+ion-card {
+  --background: white;
+  --border-color: #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+ion-card-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #333;
+}
+
+ion-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+ion-card-content p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+ion-button {
+  --border-radius: 20px;
+}
+
+ion-fab-button {
+  --background: #3880ff;
+  --color: white;
+}

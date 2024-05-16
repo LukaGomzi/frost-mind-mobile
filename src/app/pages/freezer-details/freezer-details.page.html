@@ -12,19 +12,26 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="freezer-content">
   <ion-list>
-    <ion-item *ngFor="let item of freezer?.foodItems">
-      <ion-label>
-        {{ item.name }} - Quantity: {{ item.quantity }}
-      </ion-label>
-      <ion-button slot="end" color="primary" (click)="takeItemOut(item.id, freezer?.id!)">
-        Take Out
-      </ion-button>
-      <ion-button slot="end" color="danger" (click)="disposeItem(item.id, freezer?.id!)">
-        Throw Away
-      </ion-button>
-    </ion-item>
+    <ion-card *ngFor="let item of freezer?.foodItems">
+      <ion-card-header>
+        <ion-card-title>{{ item.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Quantity: {{ item.quantity }}</p>
+        <div class="action-buttons">
+          <ion-button color="primary" (click)="takeItemOut(item.id, freezer?.id!)">
+            <ion-icon slot="start" name="remove-circle-outline"></ion-icon>
+            Take Out
+          </ion-button>
+          <ion-button color="danger" (click)="disposeItem(item.id, freezer?.id!)">
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            Throw Away
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </ion-list>
 
   <!-- Floating Action Button -->
