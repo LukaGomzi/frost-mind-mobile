@@ -1,0 +1,51 @@
+.manage-food-types-content {
+  padding: 16px;
+}
+
+ion-list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+
+ion-item {
+  --background: white;
+  --border-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+}
+
+ion-label h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+ion-label p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 4px;
+}
+
+ion-item-option {
+  --color: white;
+  --background: #e74c3c;
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+ion-item-option ion-icon {
+  margin-right: 8px;
+}
+
+ion-button {
+  --border-radius: 20px;
+  margin: 10px;
+}

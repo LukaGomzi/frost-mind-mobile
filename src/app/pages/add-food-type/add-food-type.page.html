@@ -7,9 +7,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form (ngSubmit)="submit()">
-    <ion-list>
+<ion-content [fullscreen]="true" class="add-food-type-content">
+  <div class="form-container">
+    <form (ngSubmit)="submit()">
       <ion-item>
         <ion-label position="floating">Name</ion-label>
         <ion-input [(ngModel)]="foodTypeName" name="name" required type="text"></ion-input>
@@ -18,7 +18,7 @@
         <ion-label position="floating">Expiration Months</ion-label>
         <ion-input [(ngModel)]="expirationMonths" name="expirationMonths" required type="number"></ion-input>
       </ion-item>
-    </ion-list>
-    <ion-button expand="block" type="submit">Add</ion-button>
-  </form>
+      <ion-button expand="block" type="submit" class="submit-button">Add</ion-button>
+    </form>
+  </div>
 </ion-content>
