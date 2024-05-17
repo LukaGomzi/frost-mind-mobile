@@ -3,6 +3,7 @@ import { Freezer, FreezerService } from "../../core/services/freezer.service";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FreezersStore } from "../../state/freezer.store";
+import { NotificationService } from "../../services/notification.service";
 
 @Component({
   selector: 'app-freezer-details',
@@ -20,6 +21,7 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
     private router: Router,
     private freezerService: FreezerService,
     private freezersStore: FreezersStore,
+    private notificationsService: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -45,13 +47,25 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
 
   takeItemOut(itemId: number, freezerId: number) {
     this.freezersStore.takeItemOut(freezerId, itemId, 1).subscribe({
-      error: (err) => console.error('Failed to take item out', err)
+      next: () => {
+        this.notificationsService.success('Item taken out successfully.');
+      },
+      error: (err) => {
+        console.error('Failed to take item out', err);
+        this.notificationsService.error('Failed to take item out. Please try again.');
+      }
     });
   }
 
   disposeItem(itemId: number, freezerId: number) {
     this.freezersStore.disposeItem(freezerId, itemId, 1).subscribe({
-      error: (err) => console.error('Failed to dispose item', err)
+      next: () => {
+        this.notificationsService.success('Item disposed of successfully.');
+      },
+      error: (err) => {
+        console.error('Failed to dispose item', err);
+        this.notificationsService.error('Failed to dispose item. Please try again.');
+      }
     });
   }
 
@@ -61,8 +75,13 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
 
   loadFreezer(freezerId: number): void {
     this.subscription.add(
-      this.freezersStore.getFreezerById(freezerId).subscribe(freezer => {
-        this.freezer = freezer;
+      this.freezersStore.getFreezerById(freezerId).subscribe({
+        next: (freezer) => {
+          this.freezer = freezer;
+        },
+        error: (err) => {
+          console.error('Failed to load freezer', err);
+        }
       })
     );
   }
