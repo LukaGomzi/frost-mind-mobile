@@ -13,13 +13,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="freezer-content">
-  <ion-list *ngIf="freezer && freezer.foodItems && freezer!.foodItems!.length > 0 && !error; else noItems">
-    <ion-card *ngFor="let item of freezer?.foodItems">
+  <ion-list *ngIf="freezer && freezer.foodItems && freezer.foodItems.length > 0 && !error; else noItems">
+    <ion-card *ngFor="let item of freezer.foodItems">
       <ion-card-header>
         <ion-card-title>{{ item.name }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <p>Quantity: {{ item.quantity }}</p>
+        <p *ngIf="item.expirationDate">Expires on: {{ item.expirationDate | date: 'mediumDate' }}</p>
         <div class="action-buttons">
           <ion-button color="primary" (click)="takeItemOut(item.id, freezer.id!)">
             <ion-icon slot="start" name="remove-circle-outline"></ion-icon>
