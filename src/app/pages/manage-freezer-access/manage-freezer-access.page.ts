@@ -4,6 +4,7 @@ import { Observable, of, Subscription } from "rxjs";
 import { FreezersStore } from "../../state/freezer.store";
 import { FreezerUser } from "../../core/services/freezer.service";
 import { AlertController } from "@ionic/angular";
+import { NotificationService } from "../../services/notification.service";
 
 @Component({
   selector: 'app-manage-freezer-access',
@@ -21,7 +22,8 @@ export class ManageFreezerAccessPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private freezerStore: FreezersStore,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private notificationsService: NotificationService,
   ) {}
 
   ngOnInit() {
@@ -72,9 +74,13 @@ export class ManageFreezerAccessPage implements OnInit, OnDestroy {
     if (this.freezerId) {
       this.freezerStore.removeUserFromFreezer(this.freezerId, username).subscribe({
         next: () => {
+          this.notificationsService.success(`Removed access for user ${username}`);
           this.usersWithAccess$ = this.freezerStore.getFreezerUsers(this.freezerId!);
         },
-        error: (err) => console.error('Failed to remove access', err)
+        error: (err) => {
+          this.notificationsService.error("Could not remove the access. Try again later.")
+          console.error('Failed to remove access', err)
+        }
       });
     }
   }

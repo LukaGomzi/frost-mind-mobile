@@ -15,7 +15,10 @@
         <ion-input formControlName="username"></ion-input>
       </ion-item>
       <ion-button expand="block" type="submit" [disabled]="grantAccessForm.invalid" class="submit-button">
-        Submit
+        <ng-container *ngIf="!isLoading; else loading">Submit</ng-container>
+        <ng-template #loading>
+          <ion-spinner name="circular"></ion-spinner>
+        </ng-template>
       </ion-button>
     </form>
   </div>
