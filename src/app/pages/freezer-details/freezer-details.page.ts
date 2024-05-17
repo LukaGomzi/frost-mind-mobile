@@ -11,6 +11,8 @@ import { FreezersStore } from "../../state/freezer.store";
 })
 export class FreezerDetailsPage implements OnInit, OnDestroy {
   freezer?: Freezer;
+  error?: string;
+  isLoading$ = this.freezersStore.isLoading();
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -27,6 +29,12 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
         if (freezerId) {
           this.loadFreezer(freezerId);
         }
+      })
+    );
+
+    this.subscription.add(
+      this.freezersStore.getError().subscribe(error => {
+        this.error = error
       })
     );
   }
@@ -51,7 +59,7 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/freezer-details/${freezerId}/manage-freezer-access`);
   }
 
-  private loadFreezer(freezerId: number): void {
+  loadFreezer(freezerId: number): void {
     this.subscription.add(
       this.freezersStore.getFreezerById(freezerId).subscribe(freezer => {
         this.freezer = freezer;

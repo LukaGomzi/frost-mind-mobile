@@ -30,7 +30,7 @@ export class FreezersStore {
     this.freezersStore.update((_) => ({
       freezers: [],
       isLoading: true,
-      error: undefined // Clear any previous error
+      error: undefined
     }));
 
     this.freezerService.getFreezers().subscribe({
@@ -39,7 +39,7 @@ export class FreezersStore {
           ...currentState,
           freezers,
           isLoading: false,
-          error: undefined // Clear any previous error
+          error: undefined
         }));
       },
       error: (err) => {
@@ -75,9 +75,26 @@ export class FreezersStore {
         if (freezer) {
           return of(freezer);
         } else {
+          this.freezersStore.update(state => ({
+            ...state,
+            isLoading: true
+          }))
           return this.freezerService.getFreezerById(id).pipe(
+            map(fetchedFreezer => {
+              this.freezersStore.update((state) => ({
+                ...state,
+                isLoading: false,
+                error: undefined
+              }));
+              return fetchedFreezer;
+            }),
             catchError(error => {
               console.error('Failed to fetch freezer from server', error);
+              this.freezersStore.update((state) => ({
+                ...state,
+                isLoading: false,
+                error: error.message || 'Failed to fetch freezer from server'
+              }));
               return of(undefined);
             })
           );
