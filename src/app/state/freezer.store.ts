@@ -132,7 +132,29 @@ export class FreezersStore {
   }
 
   getFreezerUsers(freezerId: number): Observable<FreezerUser[]> {
-    return this.freezerService.loadFreezerUsers(freezerId);
+    this.freezersStore.update(state => ({
+      ...state,
+      isLoading: true
+    }));
+    return this.freezerService.loadFreezerUsers(freezerId).pipe(
+      map(users => {
+        this.freezersStore.update(state => ({
+          ...state,
+          isLoading: false,
+          error: undefined
+        }));
+        return users;
+      }),
+      catchError(error => {
+        console.error('Failed to fetch freezer users', error);
+        this.freezersStore.update((state) => ({
+          ...state,
+          isLoading: false,
+          error: error.message || 'Failed to fetch freezer users'
+        }));
+        return of([]);
+      })
+    );
   }
 
   reset(): void {

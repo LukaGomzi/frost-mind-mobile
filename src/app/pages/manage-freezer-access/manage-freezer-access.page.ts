@@ -13,6 +13,8 @@ import { AlertController } from "@ionic/angular";
 export class ManageFreezerAccessPage implements OnInit, OnDestroy {
   usersWithAccess$: Observable<FreezerUser[]> = of([]);
   freezerId?: number;
+  error?: string;
+  isLoading$ = this.freezerStore.isLoading();
   private subscription?: Subscription;
 
   constructor(
@@ -29,6 +31,12 @@ export class ManageFreezerAccessPage implements OnInit, OnDestroy {
         this.usersWithAccess$ = this.freezerStore.getFreezerUsers(this.freezerId);
       }
     });
+
+    this.subscription.add(
+      this.freezerStore.getError().subscribe(error => {
+        this.error = error;
+      })
+    );
   }
 
   navigateToGrantAccess() {
