@@ -18,7 +18,14 @@
         <ion-label position="floating">Expiration Months</ion-label>
         <ion-input [(ngModel)]="foodType.expirationMonths" name="expirationMonths" type="number" required></ion-input>
       </ion-item>
-      <ion-button expand="block" type="submit" class="save-button">Save</ion-button>
+      <ion-button expand="block" type="submit" class="save-button" [disabled]="isLoading">
+        <ng-container *ngIf="!isLoading; else loading">
+          Save
+        </ng-container>
+        <ng-template #loading>
+          <ion-spinner name="circular"></ion-spinner>
+        </ng-template>
+      </ion-button>
     </form>
   </div>
 </ion-content>
