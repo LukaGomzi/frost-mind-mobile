@@ -39,7 +39,12 @@
         </ion-select>
       </ion-item>
 
-      <ion-button expand="block" type="submit" [disabled]="!newItemForm.valid" class="submit-button">Add Item</ion-button>
+      <ion-button expand="block" type="submit" [disabled]="!newItemForm.valid" class="submit-button">
+        <ng-container *ngIf="!isLoading; else loading">Add Item</ng-container>
+        <ng-template #loading>
+          <ion-spinner name="circular"></ion-spinner>
+        </ng-template>
+      </ion-button>
     </form>
   </div>
 </ion-content>
