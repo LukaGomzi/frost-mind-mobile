@@ -20,7 +20,14 @@
           <ion-input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" required></ion-input>
         </ion-item>
       </ion-list>
-      <ion-button expand="block" type="submit">Register</ion-button>
+      <ion-button expand="block" type="submit" [disabled]="isLoading">
+        <ng-container *ngIf="!isLoading; else loading">
+          Register
+        </ng-container>
+        <ng-template #loading>
+          <ion-spinner name="circular"></ion-spinner>
+        </ng-template>
+      </ion-button>
       <ion-button expand="block" fill="clear" routerLink="/login">Sign In</ion-button>
     </form>
   </div>
