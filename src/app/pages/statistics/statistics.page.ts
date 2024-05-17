@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Statistics, StatisticsCategory, StatisticsStore } from "../../state/statistics.store";
-import { Observable, Subject } from "rxjs";
+import { Observable, Subject, takeUntil } from "rxjs";
 
 export enum ViewType {
   Used = 'used',
@@ -15,6 +15,7 @@ export enum ViewType {
 export class StatisticsPage implements OnInit, OnDestroy {
   statistics$: Observable<Statistics | undefined> = this.statisticsStore.getStatistics();
   isLoading$: Observable<boolean> = this.statisticsStore.isLoading();
+  error?: string;
   viewType: ViewType = ViewType.Used;
   EnumViewType = ViewType;
 
@@ -25,6 +26,15 @@ export class StatisticsPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.loadStatistics();
+    this.statisticsStore.getError().pipe(
+      takeUntil(this.subscription$)
+    ).subscribe(error => {
+      this.error = error
+    })
+  }
+
+  loadStatistics(): void {
     this.statisticsStore.loadStatistics();
   }
 

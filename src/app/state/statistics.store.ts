@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { createStore, select, withProps } from "@ngneat/elf";
 import { StatisticsService } from "../services/statistics.service";
-import { Observable } from "rxjs";
+import { map, Observable, of } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 export interface StatisticsItem {
   name: string;
@@ -23,7 +24,7 @@ export interface Statistics {
 
 interface StatisticsState {
   statistics?: Statistics;
-  loading: boolean;
+  isLoading: boolean;
   error?: string;
 }
 
@@ -33,7 +34,7 @@ interface StatisticsState {
 export class StatisticsStore {
   private statisticsStore = createStore(
     { name: 'statistics' },
-    withProps<StatisticsState>({ loading: false })
+    withProps<StatisticsState>({ isLoading: false })
   );
 
   constructor(
@@ -46,20 +47,33 @@ export class StatisticsStore {
 
   loadStatistics(): void {
     this.statisticsStore.update(_ => ({
-      loading: true,
+      isLoading: true,
       error: undefined,
       statistics: undefined
     }))
-    this.statisticsService.getStatistics().subscribe(stats => {
-      this.statisticsStore.update(currentState => ({
-        ...currentState,
-        loading: false,
-        statistics: stats
-      }));
-    });
+    this.statisticsService.getStatistics().subscribe({
+      next: (stats) => {
+        this.statisticsStore.update(currentState => ({
+          ...currentState,
+          isLoading: false,
+          statistics: stats
+        }));
+      },
+      error: (error) => {
+        this.statisticsStore.update((state) => ({
+          ...state,
+          isLoading: false,
+          error: error.message || 'Failed to fetch the statistics'
+        }));
+      }
+    })
   }
 
   isLoading(): Observable<boolean> {
-    return this.statisticsStore.pipe(select(state => state.loading));
+    return this.statisticsStore.pipe(select(state => state.isLoading));
+  }
+
+  getError(): Observable<string | undefined> {
+    return this.statisticsStore.pipe(select(state => state.error));
   }
 }

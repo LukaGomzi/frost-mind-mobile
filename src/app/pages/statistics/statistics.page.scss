@@ -1,13 +1,9 @@
-//.total {
-//  font-weight: 600
-//}
-//
-//.loading {
-//  height: 90%;
-//  display: flex;
-//  justify-content: center;
-//  align-items: center;
-//}
+.loading {
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .statistics-content {
   --background: #f0f0f0;
@@ -49,4 +45,63 @@ ion-item {
 
 ion-spinner {
   margin: 0 auto;
+}
+
+.used-items,
+.disposed-items {
+  height: 100%;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  height: 95%;
+}
+
+.icon-large {
+  font-size: 4rem;
+  color: #3880ff;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  height: 95%;
+}
+
+.error-container.icon-large {
+  font-size: 4rem;
+  color: #ff3b30;
+  margin-bottom: 20px;
+}
+
+.error-container h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.error-container p {
+  font-size: 1rem;
+  margin-bottom: 20px;
 }
