@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Freezer, FreezerService } from "../core/services/freezer.service";
-import { first, Observable, Subject, takeUntil } from "rxjs";
+import { combineLatest, first, map, Observable, Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
 import { FreezersStore } from "../state/freezer.store";
@@ -13,6 +13,11 @@ import { FreezersStore } from "../state/freezer.store";
 })
 export class HomePage implements OnInit, OnDestroy {
   freezers$: Observable<Freezer[]> = this.freezersStore.getFreezers();
+  isLoading$: Observable<boolean> = this.freezersStore.isLoading();
+  error$: Observable<string | undefined> = this.freezersStore.getError();
+  freezersWithError$ = combineLatest([this.freezers$, this.error$]).pipe(
+    map(([freezers, error]) => ({ freezers, error }))
+  );
   private onDestroy$ = new Subject();
 
   constructor(

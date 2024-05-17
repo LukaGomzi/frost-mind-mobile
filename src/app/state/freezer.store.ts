@@ -7,6 +7,8 @@ import { FreezerItem, FreezerItemRequest } from "../core/models/freezer-item.mod
 
 interface FreezersState {
   freezers: Freezer[];
+  isLoading: boolean;
+  error?: string;
 }
 
 @Injectable({
@@ -15,7 +17,7 @@ interface FreezersState {
 export class FreezersStore {
   private freezersStore = createStore(
     { name: 'freezers' },
-    withProps<FreezersState>({ freezers: [] })
+    withProps<FreezersState>({ freezers: [], isLoading: false })
   );
 
   constructor(private freezerService: FreezerService) {}
@@ -25,11 +27,28 @@ export class FreezersStore {
   }
 
   loadFreezers() {
-    this.freezerService.getFreezers().subscribe((freezers) => {
-      this.freezersStore.update((currentState) => ({
-        ...currentState,
-        freezers,
-      }));
+    this.freezersStore.update((_) => ({
+      freezers: [],
+      isLoading: true,
+      error: undefined // Clear any previous error
+    }));
+
+    this.freezerService.getFreezers().subscribe({
+      next: (freezers) => {
+        this.freezersStore.update((currentState) => ({
+          ...currentState,
+          freezers,
+          isLoading: false,
+          error: undefined // Clear any previous error
+        }));
+      },
+      error: (err) => {
+        this.freezersStore.update((currentState) => ({
+          ...currentState,
+          isLoading: false,
+          error: err.message || 'Failed to load freezers'
+        }));
+      }
     });
   }
 
@@ -101,5 +120,13 @@ export class FreezersStore {
 
   reset(): void {
     this.freezersStore.reset();
+  }
+
+  isLoading(): Observable<boolean> {
+    return this.freezersStore.pipe(select(state => state.isLoading));
+  }
+
+  getError(): Observable<string | undefined> {
+    return this.freezersStore.pipe(select(state => state.error));
   }
 }
