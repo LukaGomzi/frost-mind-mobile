@@ -44,7 +44,7 @@ export class FoodTypeStore {
         foodTypesStore.update((currentState) => ({
           ...currentState,
           isLoading: false,
-          error
+          error: error.message || 'Could not fetch food types.'
         }));
       }
     })

@@ -33,7 +33,7 @@
   </ion-list>
 
   <ng-template #noItems>
-    <div class="no-items">
+    <div class="no-items" *ngIf="!error">
       <ion-icon name="cube-outline" class="icon-large"></ion-icon>
       <h3>No Items Found</h3>
       <p>It looks like you haven't added any food types yet. Start by adding one now!</p>
