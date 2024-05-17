@@ -13,20 +13,45 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="manage-food-types-content">
-  <ion-list>
-    <ion-item-sliding *ngFor="let foodType of foodTypes$ | async">
-      <ion-item [routerLink]="['/food-type-details', foodType.id]">
-        <ion-label>
-          <h2>{{ foodType.name }}</h2>
-          <p>Expires in {{ foodType.expirationMonths }} months</p>
-        </ion-label>
-      </ion-item>
-      <ion-item-options side="end" *ngIf="foodType.createdBy">
-        <ion-item-option color="danger" (click)="confirmDelete(foodType.id!)">
-          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-          Delete
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
+  <ion-list *ngIf="foodTypes$ | async as foodTypes">
+    <ng-container *ngIf="foodTypes.length > 0 && !error; else noItems">
+      <ion-item-sliding *ngFor="let foodType of foodTypes">
+        <ion-item [routerLink]="['/food-type-details', foodType.id]">
+          <ion-label>
+            <h2>{{ foodType.name }}</h2>
+            <p>Expires in {{ foodType.expirationMonths }} months</p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options side="end" *ngIf="foodType.createdBy">
+          <ion-item-option color="danger" (click)="confirmDelete(foodType.id!)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            Delete
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
   </ion-list>
+
+  <ng-template #noItems>
+    <div class="no-items">
+      <ion-icon name="cube-outline" class="icon-large"></ion-icon>
+      <h3>No Items Found</h3>
+      <p>It looks like you haven't added any food types yet. Start by adding one now!</p>
+      <ion-button expand="block" (click)="navigateToAddFoodType()">Add Food Type</ion-button>
+    </div>
+  </ng-template>
+
+  <ng-container *ngIf="isLoading$ | async">
+    <div class="loading">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ng-container>
+
+  <div class="error-container" *ngIf="error && error.length > 0">
+    <ion-icon name="alert-circle-outline" class="icon-large"></ion-icon>
+    <h3>Oops! Something Went Wrong</h3>
+    <p>We encountered an error while fetching items from freezers. Please check your connection or try again later.</p>
+    <ion-button expand="block" (click)="loadFoodTypes()">Retry</ion-button>
+  </div>
+
 </ion-content>

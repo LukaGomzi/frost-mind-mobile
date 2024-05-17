@@ -1,19 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FoodTypeStore } from '../../state/food-type.store';
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: 'app-manage-food-types',
   templateUrl: './manage-food-types.page.html',
   styleUrls: ['./manage-food-types.page.scss'],
 })
-export class ManageFoodTypesPage implements OnInit {
+export class ManageFoodTypesPage implements OnInit, OnDestroy {
+  error?: string;
   foodTypes$ = this.foodTypeStore.getFoodTypes();
+  isLoading$ = this.foodTypeStore.isLoading();
+  private onDestroy$ = new Subject<void>();
 
-  constructor(private foodTypeStore: FoodTypeStore, private router: Router, private alertController: AlertController) {}
+  constructor(
+    private foodTypeStore: FoodTypeStore,
+    private router: Router,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {
+    this.loadFoodTypes();
+    this.foodTypeStore.getError().pipe(
+      takeUntil(this.onDestroy$)
+    ).subscribe(error => {
+      this.error = error;
+    })
+  }
+
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
+  loadFoodTypes(): void {
     this.foodTypeStore.loadFoodTypes();
   }
 

@@ -1,15 +1,17 @@
 import { createStore, select, withProps } from '@ngneat/elf';
 import { Injectable } from '@angular/core';
 import { FoodTypeService, FoodType } from '../services/food-type.service';
-import { filter, map, tap } from "rxjs";
+import { filter, map, Observable, tap } from "rxjs";
 
 interface FoodTypesState {
   foodTypes: FoodType[];
+  isLoading: boolean;
+  error?: string;
 }
 
 const foodTypesStore = createStore(
   { name: 'foodTypes' },
-  withProps<FoodTypesState>({ foodTypes: [] })
+  withProps<FoodTypesState>({ foodTypes: [], isLoading: false })
 );
 
 @Injectable({
@@ -23,12 +25,29 @@ export class FoodTypeStore {
   }
 
   loadFoodTypes() {
-    this.foodTypeService.getFoodTypes().subscribe((foodTypes) => {
-      foodTypesStore.update((currentState) => ({
-        ...currentState,
-        foodTypes,
-      }));
-    });
+    foodTypesStore.update(_ => ({
+      foodTypes: [],
+      isLoading: true,
+      error: undefined
+    }))
+
+
+    this.foodTypeService.getFoodTypes().subscribe({
+      next: (foodTypes) => {
+        foodTypesStore.update((currentState) => ({
+          ...currentState,
+          foodTypes,
+          isLoading: false
+        }));
+      },
+      error: (error) => {
+        foodTypesStore.update((currentState) => ({
+          ...currentState,
+          isLoading: false,
+          error
+        }));
+      }
+    })
   }
 
   addFoodType(foodType: Omit<FoodType, 'id'>) {
@@ -59,5 +78,13 @@ export class FoodTypeStore {
         this.loadFoodTypes();
       })
     );
+  }
+
+  isLoading(): Observable<boolean> {
+    return foodTypesStore.pipe(select(state => state.isLoading));
+  }
+
+  getError(): Observable<string | undefined> {
+    return foodTypesStore.pipe(select(state => state.error));
   }
 }

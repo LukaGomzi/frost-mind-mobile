@@ -19,7 +19,7 @@ export class HomePage implements OnInit, OnDestroy {
   freezersWithError$ = combineLatest([this.freezers$, this.error$]).pipe(
     map(([freezers, error]) => ({ freezers, error }))
   );
-  private onDestroy$ = new Subject();
+  private onDestroy$ = new Subject<void>();
 
   constructor(
     private freezerService: FreezerService,
@@ -83,7 +83,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.onDestroy$.next(undefined);
+    this.onDestroy$.next();
     this.onDestroy$.complete();
   }
 }
