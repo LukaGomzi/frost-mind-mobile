@@ -14,7 +14,14 @@
         <ion-label position="floating">Freezer Name</ion-label>
         <ion-input [(ngModel)]="name" name="name" type="text" required></ion-input>
       </ion-item>
-      <ion-button expand="block" type="submit" class="submit-button">Add Freezer</ion-button>
+      <ion-button expand="block" type="submit" class="submit-button" [disabled]="isLoading">
+        <ng-container *ngIf="!isLoading; else loading">
+          Add Freezer
+        </ng-container>
+        <ng-template #loading>
+          <ion-spinner name="circular"></ion-spinner>
+        </ng-template>
+      </ion-button>
     </form>
   </div>
 </ion-content>
