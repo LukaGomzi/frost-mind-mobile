@@ -1,4 +1,4 @@
-import { createStore, withProps } from '@ngneat/elf';
+import { createStore, select, withProps } from '@ngneat/elf';
 
 interface AuthProps {
   isLoggedIn: boolean;
@@ -62,6 +62,10 @@ export const checkLoginStatus = () => {
       refreshToken,
     }));
   }
+}
+
+export const isUserLoggedIn = () => {
+  return authStore.pipe(select(state => state.isLoggedIn));
 }
 
 export const logout = () => {

@@ -4,14 +4,21 @@
     <ion-list>
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" [(ngModel)]="email"></ion-input>
+        <ion-input type="email" [(ngModel)]="username"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Password</ion-label>
         <ion-input type="password" [(ngModel)]="password"></ion-input>
       </ion-item>
     </ion-list>
-    <ion-button expand="block" (click)="login()">Login</ion-button>
+    <ion-button expand="block" (click)="login()" [disabled]="isLoading">
+      <ng-container *ngIf="!isLoading; else loading">
+        Login
+      </ng-container>
+      <ng-template #loading>
+        <ion-spinner name="circular"></ion-spinner>
+      </ng-template>
+    </ion-button>
     <ion-button expand="block" fill="clear" routerLink="/registration">Sign Up</ion-button>
   </div>
 </ion-content>
