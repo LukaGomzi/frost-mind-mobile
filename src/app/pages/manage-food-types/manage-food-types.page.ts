@@ -3,6 +3,8 @@ import { FoodTypeStore } from '../../state/food-type.store';
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
 import { Subject, takeUntil } from "rxjs";
+import { NotificationService } from "../../services/notification.service";
+import { FoodType } from "../../services/food-type.service";
 
 @Component({
   selector: 'app-manage-food-types',
@@ -18,7 +20,8 @@ export class ManageFoodTypesPage implements OnInit, OnDestroy {
   constructor(
     private foodTypeStore: FoodTypeStore,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit() {
@@ -43,7 +46,7 @@ export class ManageFoodTypesPage implements OnInit, OnDestroy {
     this.router.navigateByUrl('/add-food-type');
   }
 
-  async confirmDelete(id: number) {
+  async confirmDelete(foodType: FoodType) {
     const alert = await this.alertController.create({
       header: 'Confirm Delete',
       message: 'Are you sure you want to delete this food type?',
@@ -55,7 +58,7 @@ export class ManageFoodTypesPage implements OnInit, OnDestroy {
         {
           text: 'Delete',
           handler: () => {
-            this.deleteFoodType(id);
+            this.deleteFoodType(foodType);
           },
           cssClass: 'danger',
         },
@@ -65,9 +68,15 @@ export class ManageFoodTypesPage implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  deleteFoodType(id: number) {
-    this.foodTypeStore.deleteFoodType(id).subscribe(() => {
-      this.foodTypeStore.loadFoodTypes();
+  deleteFoodType(type: FoodType) {
+    this.foodTypeStore.deleteFoodType(type.id!).subscribe({
+      next: () => {
+        this.notificationService.success(`Food type ${type.name} was successfully removed.`);
+        this.foodTypeStore.loadFoodTypes();
+      },
+      error: () => {
+        this.notificationService.error('Failed to delete food type. Please try again later.');
+      }
     });
   }
 }

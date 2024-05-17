@@ -18,7 +18,14 @@
         <ion-label position="floating">Expiration Months</ion-label>
         <ion-input [(ngModel)]="expirationMonths" name="expirationMonths" required type="number"></ion-input>
       </ion-item>
-      <ion-button expand="block" type="submit" class="submit-button">Add</ion-button>
+      <ion-button expand="block" type="submit" class="submit-button" [disabled]="isLoading">
+        <ng-container *ngIf="!isLoading; else loading">
+          Add
+        </ng-container>
+        <ng-template #loading>
+          <ion-spinner name="circular"></ion-spinner>
+        </ng-template>
+      </ion-button>
     </form>
   </div>
 </ion-content>
