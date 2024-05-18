@@ -47,9 +47,9 @@ ion-spinner {
   margin: 0 auto;
 }
 
-.used-items,
-.disposed-items {
-  height: 90%;
+.used-items:has(.empty-state),
+.disposed-items:has(.empty-state) {
+  height: 100%;
 }
 
 .empty-state {
