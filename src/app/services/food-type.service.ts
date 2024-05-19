@@ -18,7 +18,7 @@ export interface FoodType {
   providedIn: 'root'
 })
 export class FoodTypeService {
-  private baseUrl = 'https://frost-mind.com/api/v1/food-types';
+  private baseUrl = 'https://frost-mind-api.vercel.app/api/v1/food-types';
 
   constructor(private http: HttpClient) {}
 

@@ -30,7 +30,7 @@ export interface FreezerUser {
   providedIn: 'root',
 })
 export class FreezerService {
-  private baseUrl = 'https://frost-mind.com/api/v1/freezers/';
+  private baseUrl = 'https://frost-mind-api.vercel.app/api/v1/freezers/';
 
   constructor(private http: HttpClient) {}
 

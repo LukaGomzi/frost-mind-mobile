@@ -33,7 +33,7 @@ export class LoginPage {
     }
 
     this.isLoading = true;
-    this.http.post<any>('https://frost-mind.com/api/v1/auth/login', { username: this.username, password: this.password })
+    this.http.post<any>('https://frost-mind-api.vercel.app/api/v1/auth/login', { username: this.username, password: this.password })
       .subscribe({
         next: (response) => {
           setLogin(this.username, response.access_token, response.refresh_token);
