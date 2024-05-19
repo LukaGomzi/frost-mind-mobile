@@ -76,4 +76,8 @@ export class StatisticsStore {
   getError(): Observable<string | undefined> {
     return this.statisticsStore.pipe(select(state => state.error));
   }
+
+  reset(): void {
+    this.statisticsStore.reset();
+  }
 }

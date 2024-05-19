@@ -87,4 +87,8 @@ export class FoodTypeStore {
   getError(): Observable<string | undefined> {
     return foodTypesStore.pipe(select(state => state.error));
   }
+
+  reset(): void {
+    foodTypesStore.reset();
+  }
 }

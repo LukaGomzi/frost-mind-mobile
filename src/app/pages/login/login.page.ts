@@ -5,6 +5,7 @@ import { FreezersStore } from '../../state/freezer.store';
 import { FoodTypeStore } from '../../state/food-type.store';
 import { NotificationService } from '../../services/notification.service';
 import { setLogin } from "../../state/auth.store";
+import { StatisticsStore } from "../../state/statistics.store";
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginPage {
     private router: Router,
     private freezerStore: FreezersStore,
     private foodTypeStore: FoodTypeStore,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private statisticsStore: StatisticsStore,
   ) {}
 
   login() {
@@ -37,6 +39,7 @@ export class LoginPage {
           setLogin(this.username, response.access_token, response.refresh_token);
           this.freezerStore.loadFreezers();
           this.foodTypeStore.loadFoodTypes();
+          this.statisticsStore.loadStatistics();
           this.notificationService.success('Login successful!');
           this.router.navigateByUrl('/tabs/home');
         },
