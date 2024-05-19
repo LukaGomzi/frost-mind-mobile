@@ -34,8 +34,15 @@ export class StatisticsPage implements OnInit, OnDestroy {
     })
   }
 
-  loadStatistics(): void {
+  loadStatistics(event?: any): void {
     this.statisticsStore.loadStatistics();
+    if (event) {
+      this.isLoading$.pipe(takeUntil(this.subscription$)).subscribe(isLoading => {
+        if (!isLoading) {
+          event.target.complete();
+        }
+      });
+    }
   }
 
   ngOnDestroy() {

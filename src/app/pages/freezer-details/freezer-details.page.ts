@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Freezer, FreezerService } from "../../core/services/freezer.service";
-import { Subscription } from "rxjs";
+import { Subscription, takeUntil } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FreezersStore } from "../../state/freezer.store";
 import { NotificationService } from "../../services/notification.service";
@@ -73,7 +73,7 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/freezer-details/${freezerId}/manage-freezer-access`);
   }
 
-  loadFreezer(freezerId: number): void {
+  loadFreezer(freezerId: number, event?: any): void {
     this.subscription.add(
       this.freezersStore.getFreezerById(freezerId).subscribe({
         next: (freezer) => {
@@ -84,6 +84,16 @@ export class FreezerDetailsPage implements OnInit, OnDestroy {
         }
       })
     );
+
+    if (event) {
+      this.subscription.add(
+        this.isLoading$.subscribe(isLoading => {
+          if (!isLoading) {
+            event.target.complete();
+          }
+        })
+      );
+    }
   }
 
   ngOnDestroy(): void {

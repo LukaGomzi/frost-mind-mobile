@@ -38,8 +38,15 @@ export class ManageFoodTypesPage implements OnInit, OnDestroy {
     this.onDestroy$.complete();
   }
 
-  loadFoodTypes(): void {
+  loadFoodTypes(event?: any): void {
     this.foodTypeStore.loadFoodTypes();
+    if (event) {
+      this.isLoading$.pipe(takeUntil(this.onDestroy$)).subscribe(isLoading => {
+        if (!isLoading) {
+          event.target.complete();
+        }
+      });
+    }
   }
 
   navigateToAddFoodType() {

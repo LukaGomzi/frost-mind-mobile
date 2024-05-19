@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { Observable, of, Subscription } from "rxjs";
+import { first, Observable, of, Subscription, take, takeUntil } from "rxjs";
 import { FreezersStore } from "../../state/freezer.store";
 import { FreezerUser } from "../../core/services/freezer.service";
 import { AlertController } from "@ionic/angular";
@@ -16,7 +16,7 @@ export class ManageFreezerAccessPage implements OnInit, OnDestroy {
   freezerId?: number;
   error?: string;
   isLoading$ = this.freezerStore.isLoading();
-  private subscription?: Subscription;
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
@@ -27,18 +27,32 @@ export class ManageFreezerAccessPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.route.params.subscribe(params => {
-      this.freezerId = params['id'];
-      if (this.freezerId) {
-        this.usersWithAccess$ = this.freezerStore.getFreezerUsers(this.freezerId);
-      }
-    });
+    this.subscription.add(
+      this.route.params.pipe(first()).subscribe(params => {
+        this.freezerId = params['id'];
+        this.loadFreezerUsers();
+      })
+    );
 
     this.subscription.add(
       this.freezerStore.getError().subscribe(error => {
         this.error = error;
       })
     );
+  }
+
+  loadFreezerUsers(event?: any): void {
+    if (this.freezerId) {
+      this.usersWithAccess$ = this.freezerStore.getFreezerUsers(this.freezerId);
+
+      if (event) {
+        this.isLoading$.subscribe(isLoading => {
+          if (!isLoading) {
+            event.target.complete();
+          }
+        })
+      }
+    }
   }
 
   navigateToGrantAccess() {
@@ -86,6 +100,6 @@ export class ManageFreezerAccessPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription?.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

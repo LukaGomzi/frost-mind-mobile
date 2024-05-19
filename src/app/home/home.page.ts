@@ -35,8 +35,15 @@ export class HomePage implements OnInit, OnDestroy {
     this.loadFreezers();
   }
 
-  loadFreezers() {
+  loadFreezers(event?: any) {
     this.freezersStore.loadFreezers();
+    if (event) {
+      this.isLoading$.pipe(takeUntil(this.onDestroy$)).subscribe(isLoading => {
+        if (!isLoading) {
+          event.target.complete();
+        }
+      });
+    }
   }
 
   addNewFreezer() {

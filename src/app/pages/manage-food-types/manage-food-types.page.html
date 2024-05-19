@@ -13,6 +13,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="manage-food-types-content">
+  <ion-refresher slot="fixed" (ionRefresh)="loadFoodTypes($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list *ngIf="foodTypes$ | async as foodTypes">
     <ng-container *ngIf="foodTypes.length > 0 && !error; else noItems">
       <ion-item-sliding *ngFor="let foodType of foodTypes">

@@ -5,6 +5,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="statistics-content">
+  <ion-refresher slot="fixed" (ionRefresh)="loadStatistics($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <!-- Segment control -->
   <ion-segment [(ngModel)]="viewType" class="segment-control">
     <ion-segment-button [value]="EnumViewType.Used">

@@ -10,6 +10,9 @@
 </ion-header>
 
 <ion-content class="home-content">
+  <ion-refresher slot="fixed" (ionRefresh)="loadFreezers($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ng-container *ngIf="freezersWithError$ | async as data">
     <ion-list *ngIf="data.freezers.length > 0; else noFreezers">
       <ion-item-sliding *ngFor="let freezer of data.freezers">

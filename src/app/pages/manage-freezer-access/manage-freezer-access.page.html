@@ -13,6 +13,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="manage-access-content">
+  <ion-refresher slot="fixed" (ionRefresh)="loadFreezerUsers($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="form-container">
     <ng-container *ngIf="usersWithAccess$ | async as users">
       <ion-list *ngIf="users.length > 0 && !error;">

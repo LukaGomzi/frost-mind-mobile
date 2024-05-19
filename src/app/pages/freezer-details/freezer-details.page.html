@@ -13,6 +13,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="freezer-content">
+  <ion-refresher slot="fixed" (ionRefresh)="loadFreezer(freezer?.id!, $event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list *ngIf="freezer && freezer.foodItems && freezer.foodItems.length > 0 && !error; else noItems">
     <ion-card *ngFor="let item of freezer.foodItems">
       <ion-card-header>
