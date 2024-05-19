@@ -1,0 +1,107 @@
+.loading {
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statistics-content {
+  --background: #f0f0f0;
+  padding: 16px;
+}
+
+.segment-control {
+  margin-bottom: 16px;
+}
+
+ion-card {
+  margin-bottom: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-header {
+  background: #3880ff;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 16px;
+}
+
+ion-card-title {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+ion-item {
+  --background: transparent;
+}
+
+.total {
+  font-weight: bold;
+  background: #e0e0e0;
+  border-radius: 8px;
+}
+
+ion-spinner {
+  margin: 0 auto;
+}
+
+.used-items:has(.empty-state),
+.disposed-items:has(.empty-state) {
+  height: 100%;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  height: 90%;
+}
+
+.icon-large {
+  font-size: 4rem;
+  color: #3880ff;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  height: 90%;
+}
+
+.error-container.icon-large {
+  font-size: 4rem;
+  color: #ff3b30;
+  margin-bottom: 20px;
+}
+
+.error-container h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.error-container p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}

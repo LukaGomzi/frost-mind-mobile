@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Freezer {{ freezer?.name! }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="addNewItemToFreezer(freezer?.id!)">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="freezer-content">
+  <ion-refresher slot="fixed" (ionRefresh)="loadFreezer(freezer?.id!, $event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="freezer && freezer.foodItems && freezer.foodItems.length > 0 && !error; else noItems">
+    <ion-card *ngFor="let item of freezer.foodItems">
+      <ion-card-header>
+        <ion-card-title>{{ item.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Quantity: {{ item.quantity }}</p>
+        <p *ngIf="item.expirationDate">Expires on: {{ item.expirationDate | date: 'mediumDate' }}</p>
+        <div class="action-buttons">
+          <ion-button color="primary" (click)="takeItemOut(item.id, freezer.id!)">
+            <ion-icon slot="start" name="remove-circle-outline"></ion-icon>
+            Take Out
+          </ion-button>
+          <ion-button color="danger" (click)="disposeItem(item.id, freezer.id!)">
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            Throw Away
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ng-template #noItems>
+    <div class="no-items" *ngIf="freezer">
+      <ion-icon name="cube-outline" class="icon-large"></ion-icon>
+      <h3>No Items Found</h3>
+      <p>It looks like you haven't added any items to the freezer yet. Start by adding one now!</p>
+      <ion-button expand="block" (click)="addNewItemToFreezer(freezer.id)">Add Item</ion-button>
+    </div>
+  </ng-template>
+
+  <ng-container *ngIf="isLoading$ | async">
+    <div class="loading">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ng-container>
+
+  <div class="error-container" *ngIf="error && error.length > 0">
+    <ion-icon name="alert-circle-outline" class="icon-large"></ion-icon>
+    <h3>Oops! Something Went Wrong</h3>
+    <p>We encountered an error while fetching items from freezers. Please check your connection or try again later.</p>
+    <ion-button expand="block" (click)="loadFreezer(freezer.id)" *ngIf="freezer">Retry</ion-button>
+  </div>
+
+  <!-- Floating Action Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="navigateToManageFreezerAccess(freezer?.id!)">
+      <ion-icon name="person-add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

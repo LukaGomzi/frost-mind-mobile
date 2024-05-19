@@ -1,0 +1,126 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Statistics</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="statistics-content">
+  <ion-refresher slot="fixed" (ionRefresh)="loadStatistics($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Segment control -->
+  <ion-segment [(ngModel)]="viewType" class="segment-control">
+    <ion-segment-button [value]="EnumViewType.Used">
+      <ion-label>Used</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="EnumViewType.Disposed">
+      <ion-label>Disposed</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ng-container *ngIf="statistics$ | async as stats">
+    <div class="used-items" *ngIf="viewType === EnumViewType.Used">
+      <ng-container *ngIf="stats.used.length > 0 && !error; else emptyUsed">
+        <ng-container *ngFor="let group of stats.used">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{ group.foodType }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ng-container *ngFor="let item of group.items">
+                <ion-item>
+                  <ion-label>{{ item.name }}</ion-label>
+                  <ion-label slot="end">{{ item.weight }}g</ion-label>
+                </ion-item>
+              </ng-container>
+              <ion-item lines="none" class="total">
+                <ion-label>Total</ion-label>
+                <ion-label slot="end">{{ group.totalWeight }}g</ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ng-container>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Summary</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <ion-label>Total in weight</ion-label>
+            <ion-label slot="end">{{ calculateTotalWeightForCategories(stats.used) }}g</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Total packages</ion-label>
+            <ion-label slot="end">{{ calculateTotalPackagesForCategories(stats.used) }}</ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      </ng-container>
+    </div>
+    <div class="disposed-items" *ngIf="viewType === EnumViewType.Disposed">
+      <ng-container *ngIf="stats.disposed.length > 0 && !error; else emptyDisposed">
+        <ng-container *ngFor="let group of stats.disposed">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{ group.foodType }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ng-container *ngFor="let item of group.items">
+                <ion-item>
+                  <ion-label>{{ item.name }}</ion-label>
+                  <ion-label slot="end">{{ item.weight }}g</ion-label>
+                </ion-item>
+              </ng-container>
+              <ion-item lines="none" class="total">
+                <ion-label>Total</ion-label>
+                <ion-label slot="end">{{ group.totalWeight }}g</ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ng-container>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Summary</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label>Total in weight</ion-label>
+              <ion-label slot="end">{{ calculateTotalWeightForCategories(stats.disposed) }}g</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Total packages</ion-label>
+              <ion-label slot="end">{{ calculateTotalPackagesForCategories(stats.disposed) }}</ion-label>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+    </div>
+    <ng-template #emptyUsed>
+      <div class="empty-state">
+        <ion-icon name="bar-chart-outline" class="icon-large"></ion-icon>
+        <h3>No Data Available</h3>
+        <p>Not enough data to display the statistics for used items.</p>
+      </div>
+    </ng-template>
+
+    <ng-template #emptyDisposed>
+      <div class="empty-state">
+        <ion-icon name="trash-bin-outline" class="icon-large"></ion-icon>
+        <h3>No Data Available</h3>
+        <p>Not enough data to display the statistics for disposed items.</p>
+      </div>
+    </ng-template>
+  </ng-container>
+  <ng-container *ngIf="isLoading$ | async as loading">
+    <div class="loading" *ngIf="loading">
+      <ion-spinner name="circular"></ion-spinner>
+    </div>
+  </ng-container>
+
+  <div class="error-container" *ngIf="error && error.length > 0">
+    <ion-icon name="alert-circle-outline" class="icon-large"></ion-icon>
+    <h3>Oops! Something Went Wrong</h3>
+    <p>We encountered an error while fetching the statistics. Please check your connection or try again later.</p>
+    <ion-button expand="block" (click)="loadStatistics()">Retry</ion-button>
+  </div>
+</ion-content>
