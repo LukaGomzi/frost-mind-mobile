@@ -34,7 +34,7 @@ export const refreshAccessToken = async () => {
     throw new Error('No username available');
   }
 
-  const response = await fetch('http://localhost:3000/api/v1/auth/refresh', {
+  const response = await fetch('https://frost-mind.com/api/v1/auth/refresh', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

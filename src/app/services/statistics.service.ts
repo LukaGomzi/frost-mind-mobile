@@ -7,7 +7,7 @@ import { Statistics } from "../state/statistics.store";
   providedIn: 'root'
 })
 export class StatisticsService {
-  private baseUrl = 'http://localhost:3000/api/v1/statistics';
+  private baseUrl = 'https://frost-mind.com/api/v1/statistics';
 
   constructor(private http: HttpClient) {}
 

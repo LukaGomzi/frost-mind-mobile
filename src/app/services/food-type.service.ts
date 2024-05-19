@@ -18,7 +18,7 @@ export interface FoodType {
   providedIn: 'root'
 })
 export class FoodTypeService {
-  private baseUrl = 'http://localhost:3000/api/v1/food-types';
+  private baseUrl = 'https://frost-mind.com/api/v1/food-types';
 
   constructor(private http: HttpClient) {}
 

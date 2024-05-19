@@ -30,7 +30,7 @@ export class RegistrationPage {
 
     this.isLoading = true;
 
-    const registerUrl = 'http://localhost:3000/api/v1/user/register';
+    const registerUrl = 'https://frost-mind.com/api/v1/user/register';
     this.http.post(registerUrl, {
       username: this.username,
       email: this.email,
