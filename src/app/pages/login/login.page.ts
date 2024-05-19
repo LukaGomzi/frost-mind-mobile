@@ -37,9 +37,6 @@ export class LoginPage {
       .subscribe({
         next: (response) => {
           setLogin(this.username, response.access_token, response.refresh_token);
-          this.freezerStore.loadFreezers();
-          this.foodTypeStore.loadFoodTypes();
-          this.statisticsStore.loadStatistics();
           this.notificationService.success('Login successful!');
           this.router.navigateByUrl('/tabs/home');
         },

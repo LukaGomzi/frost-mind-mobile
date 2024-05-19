@@ -35,6 +35,10 @@ export class HomePage implements OnInit, OnDestroy {
     this.loadFreezers();
   }
 
+  ionViewWillEnter() {
+    this.loadFreezers();
+  }
+
   loadFreezers(event?: any) {
     this.freezersStore.loadFreezers();
     if (event) {

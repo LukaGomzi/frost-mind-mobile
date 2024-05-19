@@ -34,6 +34,10 @@ export class StatisticsPage implements OnInit, OnDestroy {
     })
   }
 
+  ionViewWillEnter() {
+    this.ngOnInit();
+  }
+
   loadStatistics(event?: any): void {
     this.statisticsStore.loadStatistics();
     if (event) {
