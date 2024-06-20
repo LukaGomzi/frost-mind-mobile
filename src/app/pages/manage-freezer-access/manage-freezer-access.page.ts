@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { first, Observable, of, Subscription, take, takeUntil } from "rxjs";
+import { first, Observable, of, Subscription, take } from "rxjs";
 import { FreezersStore } from "../../state/freezer.store";
 import { FreezerUser } from "../../core/services/freezer.service";
 import { AlertController } from "@ionic/angular";
@@ -28,7 +28,7 @@ export class ManageFreezerAccessPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription.add(
-      this.route.params.pipe(first()).subscribe(params => {
+      this.route.params.subscribe(params => {
         this.freezerId = params['id'];
         this.loadFreezerUsers();
       })
