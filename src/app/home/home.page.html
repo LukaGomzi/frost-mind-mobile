@@ -13,46 +13,46 @@
   <ion-refresher slot="fixed" (ionRefresh)="loadFreezers($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ng-container *ngIf="freezersWithError$ | async as data">
-    <ion-list *ngIf="data.freezers.length > 0; else noFreezers">
-      <ion-item-sliding *ngFor="let freezer of data.freezers">
-        <ion-item [routerLink]="['/freezer-details', freezer.id]">
-          <ion-label>
-            <h2>{{ freezer.name }}</h2>
-            <p>Created: {{ freezer.created_at | date: 'medium' }}</p>
-          </ion-label>
-        </ion-item>
-        <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="confirmDelete(freezer)">
-            Delete
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
+  <ng-container *ngIf="!(isLoading$ | async); else loading">
+    <ng-container *ngIf="freezersWithError$ | async as data">
+      <ion-list *ngIf="data.freezers.length > 0; else noFreezers">
+        <ion-item-sliding *ngFor="let freezer of data.freezers">
+          <ion-item [routerLink]="['/freezer-details', freezer.id]">
+            <ion-label>
+              <h2>{{ freezer.name }}</h2>
+              <p>Created: {{ freezer.created_at | date: 'medium' }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="confirmDelete(freezer)">
+              Delete
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
 
-    <ng-template #noFreezers>
-      <div class="no-freezers" *ngIf="!data.error">
-        <ion-icon name="snow-outline" class="icon-large"></ion-icon>
-        <h3>No Freezers Found</h3>
-        <p>It looks like you haven't added any freezers yet. Start by creating one now!</p>
-        <ion-button expand="block" (click)="addNewFreezer()">Create Freezer</ion-button>
-      </div>
-    </ng-template>
+      <ng-template #noFreezers>
+        <div class="no-freezers" *ngIf="!data.error; else error">
+          <ion-icon name="snow-outline" class="icon-large"></ion-icon>
+          <h3>No Freezers Found</h3>
+          <p>It looks like you haven't added any freezers yet. Start by creating one now!</p>
+          <ion-button expand="block" (click)="addNewFreezer()">Create Freezer</ion-button>
+        </div>
+      </ng-template>
+      <ng-template #error>
+        <div class="error-container">
+          <ion-icon name="alert-circle-outline" class="icon-large"></ion-icon>
+          <h3>Oops! Something Went Wrong</h3>
+          <p>We encountered an error while fetching your freezers. Please check your connection or try again later.</p>
+          <ion-button expand="block" (click)="loadFreezers()">Retry</ion-button>
+        </div>
+      </ng-template>
+    </ng-container>
   </ng-container>
 
-  <ng-container *ngIf="isLoading$ | async">
+  <ng-template #loading>
     <div class="loading">
       <ion-spinner></ion-spinner>
     </div>
-  </ng-container>
-
-  <ng-container *ngIf="error$ | async as error">
-    <div class="error-container" *ngIf="error && error.length > 0">
-      <ion-icon name="alert-circle-outline" class="icon-large"></ion-icon>
-      <h3>Oops! Something Went Wrong</h3>
-      <p>We encountered an error while fetching your freezers. Please check your connection or try again later.</p>
-      <ion-button expand="block" (click)="loadFreezers()">Retry</ion-button>
-    </div>
-  </ng-container>
-
+  </ng-template>
 </ion-content>
